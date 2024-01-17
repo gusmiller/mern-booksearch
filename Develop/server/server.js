@@ -8,7 +8,7 @@
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
  
- const express = require('express');
+const express = require('express');
 const path = require('path');
 const db = require('./config/connection');
 const routes = require('./routes');
