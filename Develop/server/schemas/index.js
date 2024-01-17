@@ -5,12 +5,9 @@
  * Assignment # 21 - MERN Google Book Search
  * 
  * Filename: index.js
- * Date : 1/16/2024 9:27:28 PM
+ * Date : 1/16/2024 10:23:28 PM
  *******************************************************************/
- 
-const router = require('express').Router();
-const userRoutes = require('./user-routes');
+const typeDefs = require('./typeDefs');
+const resolvers = require('./resolvers');
 
-router.use('/users', userRoutes);
-
-module.exports = router;
+module.exports = { typeDefs, resolvers };

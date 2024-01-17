@@ -1,3 +1,13 @@
+/*******************************************************************
+ * Carleton Bootcamp - 2024
+ * Copyright 2024 Carleton University refactored by Gustavo Miller
+ * License: free and unencumbered software
+ * Assignment # 21 - MERN Google Book Search
+ * 
+ * Filename: Navbar.jsx
+ * Date : 1/16/2024 9:27:28 PM
+ *******************************************************************/
+ 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
@@ -8,7 +18,7 @@ import Auth from '../utils/auth';
 
 const AppNavbar = () => {
      // set modal display state
-     const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
      return (
           <>

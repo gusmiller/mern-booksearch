@@ -1,3 +1,13 @@
+/*******************************************************************
+ * Carleton Bootcamp - 2024
+ * Copyright 2024 Carleton University refactored by Gustavo Miller
+ * License: free and unencumbered software
+ * Assignment # 21 - MERN Google Book Search
+ * 
+ * Filename: main.jsx
+ * Date : 1/16/2024 9:27:28 PM
+ *******************************************************************/
+ 
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
