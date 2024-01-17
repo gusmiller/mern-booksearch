@@ -1,4 +1,14 @@
-// see SignupForm.js for comments
+/*******************************************************************
+ * Carleton Bootcamp - 2024
+ * Copyright 2024 Gustavo Miller
+ * License: free and unencumbered software
+ * Assignment # 21 - MERN Google Book Search
+ * 
+ * Filename: LoginForm.jsx
+ * Date : 1/16/2024 9:27:28 PM
+ *******************************************************************/
+ 
+ // see SignupForm.js for comments
 import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 

@@ -1,4 +1,14 @@
-const jwt = require('jsonwebtoken');
+/*******************************************************************
+ * Carleton Bootcamp - 2024
+ * Copyright 2024 Gustavo Miller
+ * License: free and unencumbered software
+ * Assignment # 21 - MERN Google Book Search
+ * 
+ * Filename: auth.js
+ * Date : 1/16/2024 9:27:28 PM
+ *******************************************************************/
+ 
+ const jwt = require('jsonwebtoken');
 
 // set token secret and expiration date
 const secret = 'mysecretsshhhhh';

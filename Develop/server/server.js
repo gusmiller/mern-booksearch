@@ -1,4 +1,14 @@
-const express = require('express');
+/*******************************************************************
+ * Carleton Bootcamp - 2024
+ * Copyright 2024 Gustavo Miller
+ * License: free and unencumbered software
+ * Assignment # 21 - MERN Google Book Search
+ * 
+ * Filename: server.js
+ * Date : 1/16/2024 9:27:28 PM
+ *******************************************************************/
+ 
+ const express = require('express');
 const path = require('path');
 const db = require('./config/connection');
 const routes = require('./routes');

@@ -1,6 +1,16 @@
-// import user model
+/*******************************************************************
+ * Carleton Bootcamp - 2024
+ * Copyright 2024 Gustavo Miller
+ * License: free and unencumbered software
+ * Assignment # 21 - MERN Google Book Search
+ * 
+ * Filename: user-controller.js
+ * Date : 1/16/2024 9:27:28 PM
+ *******************************************************************/
+ 
+ //import user model
 const { User } = require('../models');
-// import sign token function from auth
+//import sign token function from auth
 const { signToken } = require('../utils/auth');
 
 module.exports = {

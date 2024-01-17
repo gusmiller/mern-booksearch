@@ -1,4 +1,14 @@
-// use this to decode a token and get the user's information out of it
+/*******************************************************************
+ * Carleton Bootcamp - 2024
+ * Copyright 2024 Gustavo Miller
+ * License: free and unencumbered software
+ * Assignment # 21 - MERN Google Book Search
+ * 
+ * Filename: auth.js
+ * Date : 1/16/2024 9:27:28 PM
+ *******************************************************************/
+ 
+ // use this to decode a token and get the user's information out of it
 import decode from 'jwt-decode';
 
 // create a new class to instantiate for a user
