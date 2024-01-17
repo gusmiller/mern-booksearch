@@ -7,7 +7,6 @@
  * Filename: index.js
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
- 
 const User = require('./User');
 
 module.exports = { User };

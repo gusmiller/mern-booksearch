@@ -7,7 +7,6 @@
  * Filename: User.js
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
- 
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
