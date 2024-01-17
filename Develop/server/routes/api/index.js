@@ -1,6 +1,6 @@
 /*******************************************************************
  * Carleton Bootcamp - 2024
- * Copyright 2024 Gustavo Miller
+ * Copyright 2024 Carleton University refactored by Gustavo Miller
  * License: free and unencumbered software
  * Assignment # 21 - MERN Google Book Search
  * 
