@@ -4,13 +4,10 @@
  * License: free and unencumbered software
  * Assignment # 21 - MERN Google Book Search
  * 
- * Filename: server.js
- * Date : 1/16/2024 9:27:28 PM
+ * Filename: index.js
+ * Date : 1/16/2024 10:23:28 PM
  *******************************************************************/
-const express = require('express');
+const typeDefs = require('./typeDefs');
+const resolvers = require('./resolvers');
 
-const { ApolloServer } = require('@apollo/server');
-const { expressMiddleware } = require('@apollo/server/express4');
-
-const app = express();
-const PORT = process.env.PORT || 3001;
+module.exports = { typeDefs, resolvers };
