@@ -6,6 +6,9 @@
  * 
  * Filename: resolver.js
  * Date : 1/16/2024 10:26:12 PM
+ * 
+ * These are the actual functions (controllers) which will perform 
+ * the operations.
  *******************************************************************/
 const { Class } = require('../models');
 
