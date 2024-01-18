@@ -15,7 +15,7 @@ import { LOGINUSER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const LoginForm = () => {
-     const [userFormData, setUserFormData] = useState({ email: '', password: '' });
+     const [userFormData, setUserFormData] = useState({ email: 'gustavo@miller.com', password: 'GM$ller' });
      const [validated] = useState(false);
      const [showAlert, setShowAlert] = useState(false);
      const [loginUser] = useMutation(LOGINUSER);
