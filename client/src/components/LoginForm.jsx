@@ -9,15 +9,16 @@
  *******************************************************************/
 import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
+
 import { useMutation } from '@apollo/client';
-import { QUERY_LOGIN } from '../utils/mutations';
+import { LOGINUSER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const LoginForm = () => {
      const [userFormData, setUserFormData] = useState({ email: '', password: '' });
      const [validated] = useState(false);
      const [showAlert, setShowAlert] = useState(false);
-     const [login, { error, data }] = useMutation(QUERY_LOGIN);
+     const [loginUser] = useMutation(LOGINUSER);
 
      const handleInputChange = (event) => {
           const { name, value } = event.target;
@@ -27,21 +28,25 @@ const LoginForm = () => {
      const handleFormSubmit = async (event) => {
           event.preventDefault();
 
-          // check if form has everything (as per react-bootstrap docs)
-          const form = event.currentTarget;
+          const form = event.currentTarget; // Validate form
           if (form.checkValidity() === false) {
                event.preventDefault();
                event.stopPropagation();
           }
 
           try {
+               const { data } = await loginUser({ variables: { ...userFormData }, });
 
-               const { response } = await login({ variables: { ...userFormData }, });
-               if (!response.ok) { throw new Error('something went wrong!'); }
-               const { token, user } = await response.json();
-               console.log(user);
-               Auth.login(token);
-
+               const loginUserData = data && data.login;
+               // here is where we will handle the case where the server response is missing or does not contain loginUser
+               if (loginUserData) {
+                    const { token, user } = loginUserData;
+                    Auth.login(token);
+               } else {
+                    // another way to handle this would be to throw an error
+                    console.error('loginUser mutation response does not contain loginUser:', data);
+                    setShowAlert(true);
+               }
           } catch (err) {
                console.error(err);
                setShowAlert(true);

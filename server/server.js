@@ -10,8 +10,8 @@
 const express = require('express');
 const { ApolloServer } = require('@apollo/server'); //ApolloServer class
 const { expressMiddleware } = require('@apollo/server/express4'); //expressMiddleware helper function
-const path = require('path');
 const { authMiddleware } = require('./utils/auth');
+const path = require('path');
 
 // Import the two parts of a GraphQL schema
 const { typeDefs, resolvers } = require('./schemas');
@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 4001;
 const app = express();
 const server = new ApolloServer({
      typeDefs,
-     resolvers
+     resolvers,
 });
 
 // Create a new instance of an Apollo server with the GraphQL schema
@@ -31,9 +31,7 @@ const startApolloServer = async () => {
      app.use(express.urlencoded({ extended: false }));
      app.use(express.json());
 
-     app.use('/graphql', expressMiddleware(server, {
-          context: authMiddleware
-     }));
+     app.use('/graphql', expressMiddleware(server));
      
      // Code extracted from 11-Ins-MERN-Setup. Important for MERN Setup: When our application runs 
      // from production, it functions slightly differently than in development
