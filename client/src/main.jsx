@@ -7,7 +7,6 @@
  * Filename: main.jsx
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
- 
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
