@@ -22,7 +22,6 @@ const app = express();
 const server = new ApolloServer({
      typeDefs,
      resolvers,
-     introspection: process.env.NODE_ENV !== 'production'
 });
 
 // Create a new instance of an Apollo server with the GraphQL schema

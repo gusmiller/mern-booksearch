@@ -40,7 +40,6 @@ module.exports = {
                return res.status(400).json({ message: 'invalid token!' });
           }
      },
-
      /**
       * This will return the token
       * @param {*} param0 
