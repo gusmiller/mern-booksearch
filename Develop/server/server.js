@@ -17,7 +17,7 @@ const { expressMiddleware } = require('@apollo/server/express4');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3003;
 const server = new ApolloServer({
      typeDefs,
      resolvers
@@ -31,6 +31,18 @@ const startApolloServer = async () => {
 
      app.use(express.urlencoded({ extended: false }));
      app.use(express.json());
+
+     // Code extracted from 11-Ins-MERN-Setup. Important for MERN Setup: When our application runs 
+     // from production, it functions slightly differently than in development
+     // In development, we run two servers concurrently that work together
+     // In production, our Node server runs and delivers our client-side bundle from the dist/ folder 
+     if (process.env.NODE_ENV === 'production') {
+          app.use(express.static(path.join(__dirname, '../client/dist')));
+
+          app.get('*', (req, res) => {
+               res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+          });
+     }
 
      app.use('/graphql', expressMiddleware(server));
 
