@@ -7,51 +7,44 @@
  * Filename: auth.js
  * Date : 1/16/2024 9:27:28 PM
  * 
- * Decode a token and get the user's information out of it
+ * New class -instantiate for a user, decode a token and get the
+ * user's information out of it 
+ * 
+ *   getProfile- Get user data
+ *   loggedIn  - Validate user is logged in and token not expired
+ *   isTokenExpired-Validate for expired token
+ *   getToken  - Get token from local storage
+ *   login     - User logs in
+ *   logout    - User logs out
  *******************************************************************/
 import decode from 'jwt-decode';
 
-// create a new class to instantiate for a user
 class AuthService {
 
-     getProfile() { return decode(this.getToken()); } //Get user data
-
-     // check if user's logged in
-     loggedIn() {
-          // Checks if there is a saved token and it's still valid
+     getProfile() { return decode(this.getToken()); }
+     getToken() { return localStorage.getItem('id_token'); }
+     loggedIn() {          
           const token = this.getToken();
           return !!token && !this.isTokenExpired(token); // handwaiving here
      }
-
-     // check if token is expired
      isTokenExpired(token) {
           try {
                const decoded = decode(token);
-               if (decoded.exp < Date.now() / 1000) {
-                    return true;
-               } else return false;
+               return (decoded.exp < Date.now() / 1000) ? true : false
           } catch (err) {
                return false;
           }
      }
 
-     getToken() {
-          // Retrieves the user token from localStorage
-          return localStorage.getItem('id_token');
-     }
-
      login(idToken) {
-          // Saves user token to localStorage
-          localStorage.setItem('id_token', idToken);
-          window.location.assign('/');
+          localStorage.setItem('id_token', idToken); //Store token to localStorage
+          window.location.assign('/'); //Redirect to main
      }
 
-     logout() {
-          // Clear user token and profile data from localStorage
-          localStorage.removeItem('id_token');
-          // this will reload the page and reset the state of the application
-          window.location.assign('/');
-     }
+     logout() {          
+          localStorage.removeItem('id_token'); //Clear token/profile from localStorage
+          window.location.assign('/'); // Reload/reset application state
+     }     
 }
 
 export default new AuthService();

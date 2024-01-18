@@ -7,12 +7,16 @@
  * Filename: auth.js
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
+const { GraphQLError } = require('graphql');
 const jwt = require('jsonwebtoken');
 
 const secret = 'mysecretsshhhhh'; //Secret password
 const expiration = '2h'; //Expiration time span
 
 module.exports = {
+     AuthenticationError: new GraphQLError('Unable to  authenticate user.', {
+          extensions: { code: 'UNAUTHENTICATED' },
+     }),
 
      /**
       * Middleware to authenticate routes - in case user is not logged in
@@ -21,8 +25,8 @@ module.exports = {
       * @param {*} next - proceed with next route call
       * @returns 
       */
-     authMiddleware: function (req, res, next) {          
-          let token = req.query.token || req.headers.authorization; //tokens via req.query/headers
+     authMiddleware: function (req, res, next) {
+          let token = req.body.token || req.query.token || req.headers.authorization; //tokens via req.query/headers
 
           if (req.headers.authorization) {
                token = token.split(' ').pop().trim();
@@ -38,8 +42,6 @@ module.exports = {
                console.log('Invalid token');
                return res.status(400).json({ message: 'invalid token!' });
           }
-          
-          next(); // send to next endpoint
      },
 
      /**
