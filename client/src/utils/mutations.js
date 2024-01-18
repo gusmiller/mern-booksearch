@@ -8,7 +8,7 @@
  * Date : 1/18/2024 7:37:28 AM
  * 
  *   QUERY_LOGIN
- *   QUERY_ADDUSER
+ *   ADDUSER
  *   QUERY_SAVEBOOK
  *   QUERY_REMOVEBOOK
  *******************************************************************/
@@ -27,7 +27,7 @@ export const QUERY_LOGIN = gql`
      }
 `;
 
-export const QUERY_ADDUSER = gql`
+export const ADDUSER = gql`
      mutation addUser($username: String!, $email: String!, $password: String!) {
           addUser(username: $username, email: $email, password: $password) {
                token
