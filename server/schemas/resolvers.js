@@ -10,9 +10,8 @@
  * Contains queries and mutation (controllers) that perform CRUD 
  * operations. Not all CRUDs are included.
  *******************************************************************/
-const { AuthenticationError } = require('apollo-server-express');
 const { User, Book } = require('../models');
-const { signToken } = require('../utils/auth');
+const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
 
