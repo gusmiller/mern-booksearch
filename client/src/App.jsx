@@ -13,6 +13,13 @@ import { Outlet } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 
+/**
+ * There is only one endpoint that ends with Slash Graphql. Apollo Client stores
+ * the results of your GraphQL queries in a local, normalized, in-memory cache. 
+ * This enables Apollo Client to respond almost immediately to queries for 
+ * already-cached data, without even sending a network request.
+ * https://www.apollographql.com/docs/react/caching/overview
+ */
 const client = new ApolloClient({
      uri: '/graphql',
      cache: new InMemoryCache(),

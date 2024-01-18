@@ -6,9 +6,15 @@
  * 
  * Filename: API.js
  * Date : 1/16/2024 9:27:28 PM
+ * 
+ * REST Api calls to manipulate data. 
+ *   getMe - route to get logged in user's info (needs the token)
+ *   createUser - route to create new user
+ *   loginUser - route to login book
+ *   saveBook  - route to save book for current user (user logged in)
+ *   deleteBook- route to delete book for current user (user logged in)
+ *   searchGoogleBooks - make a search to google books api
  *******************************************************************/
- 
- // route to get logged in user's info (needs the token)
 export const getMe = (token) => {
      return fetch('/api/users/me', {
           headers: {
@@ -38,7 +44,6 @@ export const loginUser = (userData) => {
      });
 };
 
-// save book data for a logged in user
 export const saveBook = (bookData, token) => {
      return fetch('/api/users', {
           method: 'PUT',
@@ -50,7 +55,6 @@ export const saveBook = (bookData, token) => {
      });
 };
 
-// remove saved book data for a logged in user
 export const deleteBook = (bookId, token) => {
      return fetch(`/api/users/books/${bookId}`, {
           method: 'DELETE',

@@ -7,8 +7,6 @@
  * Filename: LoginForm.jsx
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
- 
- // see SignupForm.js for comments
 import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 
