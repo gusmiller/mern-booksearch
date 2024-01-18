@@ -7,11 +7,13 @@
  * Filename: SearchBooks.jsx
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
+import { useQuery } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import { Container, Col, Form, Button, Card, Row } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-import { saveBook, searchGoogleBooks } from '../utils/API';
+//import { saveBook, searchGoogleBooks } from '../utils/API';
+import { GET_ME, SEARCH_GOOGLE_BOOKS } from '../utils/queries';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 const SearchBooks = () => {
@@ -33,17 +35,11 @@ const SearchBooks = () => {
      const handleFormSubmit = async (event) => {
           event.preventDefault();
 
-          if (!searchInput) {
-               return false;
-          }
+          if (!searchInput) { return false; }
 
           try {
                const response = await searchGoogleBooks(searchInput);
-
-               if (!response.ok) {
-                    throw new Error('something went wrong!');
-               }
-
+               if (!response.ok) { throw new Error('something went wrong!'); }
                const { items } = await response.json();
 
                const bookData = items.map((book) => ({
@@ -95,19 +91,13 @@ const SearchBooks = () => {
                          <Form onSubmit={handleFormSubmit}>
                               <Row>
                                    <Col xs={12} md={8}>
-                                        <Form.Control
-                                             name='searchInput'
-                                             value={searchInput}
+                                        <Form.Control name='searchInput' value={searchInput}
                                              onChange={(e) => setSearchInput(e.target.value)}
-                                             type='text'
-                                             size='lg'
-                                             placeholder='Search for a book'
+                                             type='text' size='lg' placeholder='Search for a book'
                                         />
                                    </Col>
                                    <Col xs={12} md={4}>
-                                        <Button type='submit' variant='success' size='lg'>
-                                             Submit Search
-                                        </Button>
+                                        <Button type='submit' variant='success' size='lg'>Submit Search</Button>
                                    </Col>
                               </Row>
                          </Form>
