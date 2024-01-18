@@ -30,6 +30,8 @@ const startApolloServer = async () => {
      app.use(express.urlencoded({ extended: false }));
      app.use(express.json());
 
+     app.use('/graphql', expressMiddleware(server));
+
      // Code extracted from 11-Ins-MERN-Setup. Important for MERN Setup: When our application runs 
      // from production, it functions slightly differently than in development
      // In development, we run two servers concurrently that work together
@@ -41,8 +43,6 @@ const startApolloServer = async () => {
                res.sendFile(path.join(__dirname, '../client/dist/index.html'));
           });
      }
-
-     app.use('/graphql', expressMiddleware(server));
 
      db.once('open', () => {
           app.listen(PORT, () => {

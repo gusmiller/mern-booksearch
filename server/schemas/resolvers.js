@@ -67,20 +67,20 @@ const resolvers = {
      Mutation: {
           
           login: async (_, { email, password }) => {
-               const user = await User.findOne({ email });
+               const useraccess = await User.findOne({ email });
 
-               if (!user) { throw new AuthenticationError('Invalid credentials'); }
-               const correctPw = await user.isCorrectPassword(password);
-               if (!correctPw) { throw new AuthenticationError('Invalid credentials'); }
+               if (!useraccess) { throw new AuthenticationError('Invalid credentials'); }
+               const validpassword = await useraccess.isCorrectPassword(password);
+               if (!validpassword) { throw new AuthenticationError('Invalid credentials'); }
 
-               const token = signToken(user);
-               return { token, user };
+               const token = signToken(useraccess);
+               return { token, useraccess };
           },
 
           addUser: async (_, { username, email, password }) => {
-               const user = await User.create({ username, email, password });
-               const token = signToken(user);
-               return { token, user };
+               const newuser = await User.create({ username, email, password });
+               const token = signToken(newuser);
+               return { token, newuser };
           },
           
           saveBook: async (_, { bookData }, context) => {
@@ -99,13 +99,13 @@ const resolvers = {
           
           removeBook: async (_, { bookId }, context) => {
                if (context.user) {
-                    const updatedUser = await User.findOneAndUpdate(
+                    const removeUser = await User.findOneAndUpdate(
                          { _id: context.user._id },
                          { $pull: { savedBooks: { bookId } } },
                          { new: true }
                     ).populate('savedBooks');
 
-                    return updatedUser;
+                    return removeUser;
                }
 
                throw new AuthenticationError('Please log in!');

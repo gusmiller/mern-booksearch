@@ -23,27 +23,26 @@ const typeDefs = `
 
   type Auth {
      token: ID!
-     user: [User]
+     user: User
   }
 
   type User {
      _id: ID
      username: String
      email: String
-     password: String
      bookCount: Int
-     savedBooks: [Book],
+     savedBooks: [Book]
   }
 
   # Define which queries the front end is allowed to make and what data is returned
   type Query {
-     me: [User]
+     me: User
      searchGoogleBooks(searchInput: String!): [Book]
   }
 
   type Mutation{
-     login(email: String!, password: String): Auth
-     addUser(username: String!, email: String!, password: String): Auth
+     login(email: String!, password: String!): Auth
+     addUser(username: String!, email: String!, password: String!): Auth
      saveBook(bookData: BookInput!): User
      removeBook(bookId: ID!): User
      )
