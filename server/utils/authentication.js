@@ -7,18 +7,17 @@
  * Filename: auth.js
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
-const jwt = require('jsonwebtoken');
 const { GraphQLError } = require('graphql');
+const jwt = require('jsonwebtoken');
 
 const secret = 'mysecretsshhhhh'; //Secret password
 const expiration = '2h'; //Expiration time span
 
 module.exports = {
-     AuthenticationError: new GraphQLError('Could not authenticate user.', {
-          extensions: {
-               code: 'UNAUTHENTICATED',
-          },
+     AuthenticationError: new GraphQLError('Unable to  authenticate user.', {
+          extensions: { code: 'UNAUTHENTICATED' },
      }),
+
      /**
       * Middleware to authenticate routes - in case user is not logged in
       * @param {*} req - request??
@@ -27,18 +26,24 @@ module.exports = {
       * @returns 
       */
      authMiddleware: function (req, res, next) {
-          let token = req.headers.authorization || '';
-          if (req.headers.authorization) { token = token.split(' ').pop().trim(); }
+          let token = req.body.token || req.query.token || req.headers.authorization;
+
+          if (req.headers.authorization) {
+               token = token.split(' ').pop().trim();
+          }
+
           if (!token) { return res.status(400).json({ message: 'Invalid token!' }); }
 
-          // Attempt to Validate token and return user data
+          // Validate token and return user data
           try {
                const { data } = jwt.verify(token, secret, { maxAge: expiration });
-               return { user: data };
-          } catch (error) {
-               console.error('Invalid token', error);
+               req.user = data;
+          } catch {
+               console.log('Invalid token');
                return res.status(400).json({ message: 'invalid token!' });
           }
+
+          return req;
      },
 
      /**

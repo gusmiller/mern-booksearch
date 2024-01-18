@@ -30,7 +30,7 @@ const resolvers = {
                     return userData;
                }
 
-               throw new AuthenticationError('Not logged in');
+               throw AuthenticationError;
           },
           
           searchGoogleBooks: async (_, { searchInput }) => {
@@ -68,10 +68,10 @@ const resolvers = {
           login: async (_, { email, password }) => {
                const useraccess = await User.findOne({ email });
 
-               if (!useraccess) { throw new AuthenticationError('Invalid credentials'); }
+               if (!useraccess) { throw AuthenticationError; }
                const validpassword = await useraccess.isCorrectPassword(password);
-               if (!validpassword) { throw new AuthenticationError('Invalid credentials'); }
-
+               if (!validpassword) { throw AuthenticationError; }
+               
                const token = signToken(useraccess);
                return { token, useraccess };
           },
@@ -89,11 +89,10 @@ const resolvers = {
                          { $addToSet: { savedBooks: bookData } },
                          { new: true }
                     ).populate('savedBooks');
-
                     return updatedUser;
                }
 
-               throw new AuthenticationError('Please log in!');
+               throw AuthenticationError;
           },
           
           removeBook: async (_, { bookId }, context) => {
@@ -103,11 +102,10 @@ const resolvers = {
                          { $pull: { savedBooks: { bookId } } },
                          { new: true }
                     ).populate('savedBooks');
-
                     return removeUser;
                }
 
-               throw new AuthenticationError('Please log in!');
+               throw AuthenticationError;
           },
      },
 };
