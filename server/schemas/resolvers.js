@@ -32,7 +32,7 @@ const resolvers = {
 
                throw AuthenticationError;
           },
-          
+
           searchGoogleBooks: async (_, { searchInput }) => {
                try {
                     // usinmg the fetch api to make a request to the google books api
@@ -50,7 +50,7 @@ const resolvers = {
 
                     return searchResults;
                } catch (error) {
-                    console.error(error);                    
+                    console.error(error);
                     throw new Error('Google Books search failed!');
                }
           },
@@ -64,14 +64,14 @@ const resolvers = {
       *   removeBook - Deletes book from the users profile
       */
      Mutation: {
-          
+
           login: async (_, { email, password }) => {
                const useraccess = await User.findOne({ email });
 
                if (!useraccess) { throw AuthenticationError; }
                const validpassword = await useraccess.isCorrectPassword(password);
                if (!validpassword) { throw AuthenticationError; }
-               
+
                const token = signToken(useraccess);
                return { token, useraccess };
           },
@@ -81,28 +81,30 @@ const resolvers = {
                const token = signToken(newuser);
                return { token, newuser };
           },
-          
-          saveBook: async (_, { bookData }, context) => {
+
+          saveBook: async (_, { input }, context) => {
+               const { authors, description, title, bookId, image, link } = input;
+
                if (context.user) {
                     const updatedUser = await User.findOneAndUpdate(
                          { _id: context.user._id },
-                         { $addToSet: { savedBooks: bookData } },
-                         { new: true }
-                    ).populate('savedBooks');
+                         { $addToSet: { savedBooks: { authors, description, title, bookId, image, link } } },
+                         { new: true, runValidators: true }
+                    );
                     return updatedUser;
                }
 
                throw AuthenticationError;
           },
-          
+
           removeBook: async (_, { bookId }, context) => {
                if (context.user) {
-                    const removeUser = await User.findOneAndUpdate(
+                    const removeBook = await User.findOneAndUpdate(
                          { _id: context.user._id },
                          { $pull: { savedBooks: { bookId } } },
                          { new: true }
-                    ).populate('savedBooks');
-                    return removeUser;
+                    );
+                    return removeBook;
                }
 
                throw AuthenticationError;

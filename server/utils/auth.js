@@ -7,10 +7,17 @@
  * Filename: auth.js
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
+
+// Dotenv is a zero-dependency module that loads environment variables from 
+// a .env file into process.env. Storing configuration in the environment 
+// separate from code is based on The Twelve-Factor App methodology
+// https://www.npmjs.com/package/dotenv
+require("dotenv").config();
+
 const jwt = require('jsonwebtoken');
 const { GraphQLError } = require('graphql');
 
-const secret = 'mysecretsshhhhh'; //Secret password
+const secret = process.env.SECRET; //Secret password
 const expiration = '2h'; //Expiration time span
 
 module.exports = {
@@ -26,10 +33,10 @@ module.exports = {
       * @param {*} next - proceed with next route call
       * @returns 
       */
-     authMiddleware: function (req, res, next) {
+     authMiddleware: function ({req}) {
           let token = req.headers.authorization || '';
           if (req.headers.authorization) { token = token.split(' ').pop().trim(); }
-          if (!token) { return res.status(400).json({ message: 'Invalid token!' }); }
+          if (!token) { return req; }
 
           // Attempt to Validate token and return user data
           try {
@@ -37,8 +44,8 @@ module.exports = {
                return { user: data };
           } catch (error) {
                console.error('Invalid token', error);
-               return res.status(400).json({ message: 'invalid token!' });
           }
+          return req;
      },
      /**
       * This will return the token
