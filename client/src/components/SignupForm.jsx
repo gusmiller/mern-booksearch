@@ -10,7 +10,7 @@
 import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
-import { REGISTER_USER } from '../utils/mutations'; //Import mutations
+import { ADD_USER } from '../utils/mutations'; //Import mutations
 import Auth from '../utils/auth'; //Import authentication methods
 
 const SignupForm = () => {
@@ -18,7 +18,7 @@ const SignupForm = () => {
      const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' }); //Initial 
      const [validated] = useState(false);
      const [showAlert, setShowAlert] = useState(false); //State for alert
-     const [registerUser, { error, data }] = useMutation(REGISTER_USER);
+     const [registerUser, { error, data }] = useMutation(ADD_USER);
 
      /**
       * Handlert for input change
@@ -50,7 +50,7 @@ const SignupForm = () => {
                     },
                });
 
-               const { token, user } = await response.data.registerUser;
+               const { token, user } = response.data.registerUser;
                Auth.login(token);
 
           } catch (err) {

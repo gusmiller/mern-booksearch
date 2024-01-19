@@ -7,8 +7,9 @@
  * Filename: resolver.js
  * Date : 1/16/2024 10:26:12 PM
  * 
- * Contains queries and mutation (controllers) that perform CRUD 
- * operations. Not all CRUDs are included.
+ * me - Retrieves the user profile 
+ * searchGoogleBooks - returns an array of books based on the search 
+ * input. It uses fetch api to make a request to the google books api
  *******************************************************************/
 const { User } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
@@ -23,13 +24,12 @@ const resolvers = {
      Query: {
 
           me: async (parent, { context }) => {
-               return User.findOne({ _id: context._id })
+               return await User.findOne({ _id: context._id })
                     .select('-__v -password')
                     .populate('savedBooks');
           },
           searchGoogleBooks: async (_, { searchInput }) => {
                try {
-                    // usinmg the fetch api to make a request to the google books api
                     const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchInput}`);
                     const data = await response.json();
 

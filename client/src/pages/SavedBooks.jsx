@@ -8,36 +8,27 @@
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_ME } from '../utils/queries';
-import { QUERY_REMOVEBOOK } from '../utils/mutations';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
-
 import Auth from '../utils/auth';
+
+import { GET_ME } from '../utils/queries';
+import { REMOVE_BOOK } from '../utils/mutations';
 import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
-     // Pass the query to execute on component load to the useQuery hook. The useQuery hook will 
+     // Pass the query for execution on component load to the useQuery hook. The useQuery hook will 
      // always give back an object.
      const { loading, data } = useQuery(GET_ME);
-     const [removeBook, { error }] = useMutation(QUERY_REMOVEBOOK);
-
+     const [removeBook, { error }] = useMutation(REMOVE_BOOK);
      const userData = data?.me || {}; //Assign data from data object
 
      // create function that accepts the book's mongo _id value as param and deletes the book from the database
      const handleDeleteBook = async (bookId) => {
           const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-          if (!token) {
-               return false;
-          }
+          if (!token) { return false; }
 
           try {
-               const response = await removeBook({
-                    variables: {
-                         bookId: bookId,
-                    }
-               });
-
+               const response = await removeBook({ variables: { bookId: bookId, }});
                removeBookId(bookId);
           } catch (err) {
                console.error(err);

@@ -8,26 +8,24 @@
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
 import './App.css';
-import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { Outlet } from 'react-router-dom';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import Navbar from './components/Navbar';
 
-import { setContext } from '@apollo/client/link/context';
-
 // Construct our main GraphQL API endpoint
-const httpLink = createHttpLink({
-     uri: '/graphql',
-});
+const httpLink = createHttpLink({ uri: '/graphql', });
 
-const authLink = setContext((_, { headers }) => {
-     // get the authentication token from local storage if it exists
-     const token = localStorage.getItem('id_token');
-     // return the headers to the context so httpLink can read them
+/**
+ * Construct request middleware that will attach the JWT token to 
+ * every request as an `authorization` header. It first gets the 
+ * authentication token from local storage if it exists. It then 
+ * return the headers to the context so httpLink can read them
+ */
+const authLink = setContext((_, { headers }) => {     
+     const token = localStorage.getItem('id_token');     
      return {
-          headers: {
-               ...headers,
-               authorization: token ? `Bearer ${token}` : '',
-          },
+          headers: { ...headers, authorization: token ? `Bearer ${token}` : '', },
      };
 });
 
@@ -38,10 +36,7 @@ const authLink = setContext((_, { headers }) => {
  * already-cached data, without even sending a network request.
  * https://www.apollographql.com/docs/react/caching/overview
  */
-const client = new ApolloClient({
-     link: authLink.concat(httpLink),
-     cache: new InMemoryCache(),
-});
+const client = new ApolloClient({ link: authLink.concat(httpLink), cache: new InMemoryCache(), });
 
 function App() {
      return (

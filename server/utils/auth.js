@@ -33,10 +33,10 @@ module.exports = {
       * @param {*} next - proceed with next route call
       * @returns 
       */
-     authMiddleware: function ({req}) {
+     authMiddleware: function ({ req }) {
           let token = req.headers.authorization || '';
           if (req.headers.authorization) { token = token.split(' ').pop().trim(); }
-          if (!token) { return req; }
+          if (!token) { return { user: null } }
 
           // Attempt to Validate token and return user data
           try {
@@ -44,16 +44,16 @@ module.exports = {
                return { user: data };
           } catch (error) {
                console.error('Invalid token', error);
+               return { user: null }
           }
-          return req;
      },
      /**
-      * This will return the token
+      * Authenticate routes. This will return the token
       * @param {*} param0 
       * @returns 
       */
-     signToken: function ({ email, username, _id }) {
-          const payload = { email, username, _id };
+     signToken: function ({ username, email, _id }) {
+          const payload = { username, email, _id };
           return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
      },
 };

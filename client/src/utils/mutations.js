@@ -9,12 +9,12 @@
  * 
  *   QUERY_LOGIN
  *   ADDUSER
- *   QUERY_SAVEBOOK
- *   QUERY_REMOVEBOOK
+ *   SAVE_BOOK
+ *   REMOVE_BOOK
  *******************************************************************/
 import { gql } from '@apollo/client';
 
-export const LOGINUSER = gql`
+export const LOGIN_USER = gql`
      mutation login($email: String!, $password: String!) {
           login(email: $email, password: $password) {
                token
@@ -26,7 +26,7 @@ export const LOGINUSER = gql`
           }
      }
 `;
-export const REGISTER_USER = gql`
+export const ADD_USER = gql`
      mutation registerUser($username: String!, $email: String!, $password: String!) {
           registerUser(username: $username, email: $email, password: $password) {
                token
@@ -38,14 +38,14 @@ export const REGISTER_USER = gql`
           }
      }
 `;
-export const QUERY_SAVEBOOK = gql`
+export const SAVE_BOOK = gql`
      mutation saveBook($input: BookInput) {
           saveBook(input: $input) {
                _id
           }
      }
 `;
-export const QUERY_REMOVEBOOK = gql`
+export const REMOVE_BOOK = gql`
      mutation removeBook($bookId: String) {
           removeBook(bookId: $bookId) {
                _id

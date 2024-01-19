@@ -25,7 +25,7 @@ class AuthService {
      getToken() { return localStorage.getItem('id_token'); }
      loggedIn() {          
           const token = this.getToken();
-          return !!token && !this.isTokenExpired(token); // handwaiving here
+          return (!!token && !this.isTokenExpired(token)); // handwaiving here
      }
      isTokenExpired(token) {
           try {

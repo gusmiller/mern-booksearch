@@ -7,7 +7,7 @@
  * Filename: queries.js
  * Date : 1/18/2024 7:37:28 AM
  * 
- *   GET_ME
+ *   GET_ME - Configuration for the me query to retrieve user data
  *   SEARCH_GOOGLE_BOOKS
  *******************************************************************/
 import { gql } from '@apollo/client';
