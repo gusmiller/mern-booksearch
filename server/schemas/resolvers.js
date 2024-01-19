@@ -10,7 +10,7 @@
  * Contains queries and mutation (controllers) that perform CRUD 
  * operations. Not all CRUDs are included.
  *******************************************************************/
-const { User, Book } = require('../models');
+const { User } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
@@ -22,17 +22,11 @@ const resolvers = {
       */
      Query: {
 
-          me: async (_, __, context) => {
-               if (context.user) {
-                    const userData = await User.findOne({ _id: context.user._id })
-                         .select('-__v -password')
-                         .populate('savedBooks');
-                    return userData;
-               }
-
-               throw AuthenticationError;
+          me: async (parent, { context }) => {
+               return User.findOne({ _id: context._id })
+                    .select('-__v -password')
+                    .populate('savedBooks');
           },
-
           searchGoogleBooks: async (_, { searchInput }) => {
                try {
                     // usinmg the fetch api to make a request to the google books api
