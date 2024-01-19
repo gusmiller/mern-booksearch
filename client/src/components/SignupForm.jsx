@@ -14,10 +14,11 @@ import { REGISTER_USER } from '../utils/mutations'; //Import mutations
 import Auth from '../utils/auth'; //Import authentication methods
 
 const SignupForm = () => {
-     const [userFormData, setUserFormData] = useState({ username: 'Gustavo Miller', email: 'gustavo@miller.com', password: 'GM$ller' }); //Initial state for validation
+     //const [userFormData, setUserFormData] = useState({ username: 'Gustavo Miller', email: 'gustavo@miller.com', password: 'GM$ller' });
+     const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' }); //Initial 
      const [validated] = useState(false);
      const [showAlert, setShowAlert] = useState(false); //State for alert
-     const [registerUser, { error }] = useMutation(REGISTER_USER);
+     const [registerUser, { error, data }] = useMutation(REGISTER_USER);
 
      /**
       * Handlert for input change
@@ -40,8 +41,16 @@ const SignupForm = () => {
 
           try {
 
-               const { data } = await registerUser({ variables: { ...userFormData }, });
-               const { token, user } = data.registerUser;
+               //const { data } = await registerUser({ variables: { ...userFormData }, });
+               const response = await registerUser({
+                    variables: {
+                         username: userFormData.user,
+                         email: userFormData.email,
+                         password: userFormData.password
+                    },
+               });
+
+               const { token, user } = await response.data.registerUser;
                Auth.login(token);
 
           } catch (err) {

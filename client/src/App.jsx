@@ -8,9 +8,28 @@
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
 import './App.css';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
+
+import { setContext } from '@apollo/client/link/context';
+
+// Construct our main GraphQL API endpoint
+const httpLink = createHttpLink({
+     uri: '/graphql',
+});
+
+const authLink = setContext((_, { headers }) => {
+     // get the authentication token from local storage if it exists
+     const token = localStorage.getItem('id_token');
+     // return the headers to the context so httpLink can read them
+     return {
+          headers: {
+               ...headers,
+               authorization: token ? `Bearer ${token}` : '',
+          },
+     };
+});
 
 /**
  * There is only one endpoint that ends with Slash Graphql. Apollo Client stores
@@ -20,7 +39,7 @@ import Navbar from './components/Navbar';
  * https://www.apollographql.com/docs/react/caching/overview
  */
 const client = new ApolloClient({
-     uri: '/graphql',
+     link: authLink.concat(httpLink),
      cache: new InMemoryCache(),
 });
 
