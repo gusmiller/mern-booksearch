@@ -7,10 +7,17 @@
  * Filename: auth.js
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
+
+// Dotenv is a zero-dependency module that loads environment variables from 
+// a .env file into process.env. Storing configuration in the environment 
+// separate from code is based on The Twelve-Factor App methodology
+// https://www.npmjs.com/package/dotenv
+require("dotenv").config();
+
 const { GraphQLError } = require('graphql');
 const jwt = require('jsonwebtoken');
 
-const secret = 'mysecretsshhhhh'; //Secret password
+const secret = process.env.SECRET; //Secret password
 const expiration = '2h'; //Expiration time span
 
 module.exports = {
