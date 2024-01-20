@@ -16,7 +16,6 @@ import { SAVE_BOOK } from '../utils/mutations';
 import Auth from '../utils/auth';
 import { SEARCH_GOOGLE_BOOKS } from '../utils/queries';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
-//import { searchGoogleBooks } from '../utils/API'; //User the GraphQL mutation
 
 const SearchBooks = () => {
      const [searchedBooks, setSearchedBooks] = useState([]); // State holding returned google api data
