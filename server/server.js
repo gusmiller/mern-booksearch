@@ -7,6 +7,8 @@
  * Filename: server.js
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
+require('dotenv').config({path: '../.env'});
+
 const express = require('express');
 const { ApolloServer } = require('@apollo/server'); //ApolloServer class
 const { expressMiddleware } = require('@apollo/server/express4'); //expressMiddleware helper function
@@ -17,7 +19,7 @@ const path = require('path');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 const app = express();
 const server = new ApolloServer({
      typeDefs,
@@ -50,7 +52,7 @@ const startApolloServer = async () => {
      db.once('open', () => {
           app.listen(PORT, () => {
                console.log(`GraphQL Server running on port ${PORT}!`);
-               console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
+               console.log(`Use GraphQL at ${process.env.VITE_URL}/graphql`);
           })
      })
 };

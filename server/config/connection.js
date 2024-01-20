@@ -1,3 +1,4 @@
+require('dotenv').config({path: '../.env'});
 /*******************************************************************
  * Carleton Bootcamp - 2024
  * Copyright 2024 Carleton University refactored by Gustavo Miller
@@ -7,13 +8,6 @@
  * Filename: connection.js
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
-require('dotenv').config();
 const mongoose = require('mongoose');
-
-mongoose.connect(process.env.DB_HOST + process.env.DB_NAME,
-     {
-          useNewUrlParser: true, 
-          useUnifiedTopology: true
-     }
-);
+mongoose.connect(process.env.DB_HOST + process.env.DB_NAME);
 module.exports = mongoose.connection;
