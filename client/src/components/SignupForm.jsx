@@ -42,16 +42,8 @@ const SignupForm = () => {
 
           try {
 
-               //const { data } = await addUser({ variables: { ...userFormData }, });
-               const response = await addUser({
-                    variables: {
-                         username: userFormData.user,
-                         email: userFormData.email,
-                         password: userFormData.password
-                    },
-               });
-
-               const { token, user } = response.data.addUser;
+               const { data } = await addUser({ variables: { ...userFormData }, });
+               const { token, user } = data.addUser;
                Auth.login(token);
 
           } catch (err) {

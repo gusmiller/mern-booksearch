@@ -12,27 +12,21 @@
  * root (other JS and TS extensions are also supported).
  * URL: https://vitejs.dev/config/
  *******************************************************************/
-
-// Dotenv is a zero-dependency module that loads environment variables from 
-// a .env file into process.env. Storing configuration in the environment 
-// separate from code is based on The Twelve-Factor App methodology
-// https://www.npmjs.com/package/dotenv
-require("dotenv").config();
-
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// https://vitejs.dev/config/
 export default defineConfig({
      plugins: [react()],
      server: {
-          port: process.env.PORT,
+          port: 3000,
           open: true,
           proxy: {
                '/graphql': {
-                    target: `http://localhost:${process.env.PORT}`,
+                    target: 'http://localhost:3001',
                     secure: false,
                     changeOrigin: true
-               }
+               },
           }
      }
 })
