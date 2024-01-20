@@ -7,13 +7,6 @@
  * Filename: server.js
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
-
-// Dotenv is a zero-dependency module that loads environment variables from 
-// a .env file into process.env. Storing configuration in the environment 
-// separate from code is based on The Twelve-Factor App methodology
-// https://www.npmjs.com/package/dotenv
-require("dotenv").config();
-
 const express = require('express');
 const { ApolloServer } = require('@apollo/server'); //ApolloServer class
 const { expressMiddleware } = require('@apollo/server/express4'); //expressMiddleware helper function
