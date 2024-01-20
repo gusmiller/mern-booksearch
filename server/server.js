@@ -7,6 +7,13 @@
  * Filename: server.js
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
+
+// Dotenv is a zero-dependency module that loads environment variables from 
+// a .env file into process.env. Storing configuration in the environment 
+// separate from code is based on The Twelve-Factor App methodology
+// https://www.npmjs.com/package/dotenv
+require("dotenv").config();
+
 const express = require('express');
 const { ApolloServer } = require('@apollo/server'); //ApolloServer class
 const { expressMiddleware } = require('@apollo/server/express4'); //expressMiddleware helper function
@@ -17,7 +24,7 @@ const path = require('path');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 3001;
 const app = express();
 const server = new ApolloServer({
      typeDefs,
@@ -31,8 +38,10 @@ const startApolloServer = async () => {
      app.use(express.urlencoded({ extended: false }));
      app.use(express.json());
 
-     app.use('/graphql', expressMiddleware(server));
-     
+     app.use('/graphql', expressMiddleware(server, {
+          context: authMiddleware
+     }));
+
      // Code extracted from 11-Ins-MERN-Setup. Important for MERN Setup: When our application runs 
      // from production, it functions slightly differently than in development
      // In development, we run two servers concurrently that work together
@@ -47,7 +56,7 @@ const startApolloServer = async () => {
 
      db.once('open', () => {
           app.listen(PORT, () => {
-               console.log(`API server running on port ${PORT}!`);
+               console.log(`GraphQL Server running on port ${PORT}!`);
                console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
           })
      })

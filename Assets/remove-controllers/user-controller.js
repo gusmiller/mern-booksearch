@@ -7,8 +7,8 @@
  * Filename: user-controller.js
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
-const { User } = require('../models'); //import user model
-const { signToken } = require('../utils/auth'); //import sign token function from auth
+const { User } = require('../../server/models'); //import user model
+const { signToken } = require('../../server/utils/auth'); //import sign token function from auth
 
 module.exports = {
      // get a single user by either their id or their username

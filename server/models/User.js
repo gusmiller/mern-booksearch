@@ -17,8 +17,7 @@ const userSchema = new Schema(
           email: { type: String, required: true, unique: true, match: [/.+@.+\..+/, 'Enter a valid email address'], },
           password: { type: String, required: true, },
           savedBooks: [bookSchema],// Array of books
-     },
-     
+     }, 
      {
           toJSON: { virtuals: true, }, //Required to use virtuals
      }
