@@ -34,7 +34,7 @@ const SearchBooks = () => {
                     bookId: book.bookId,
                     authors: book.authors || ['No authors to display'],
                     title: book.title,
-                    description: book.description,
+                    description: book.description || 'No description available',
                     image: book.image || '',
                }));
 

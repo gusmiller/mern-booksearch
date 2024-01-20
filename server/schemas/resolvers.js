@@ -36,7 +36,7 @@ const resolvers = {
 
                     const searchResults = data.items.map((item) => ({
                          authors: item.volumeInfo.authors || ['No author to display'],
-                         description: item.volumeInfo.description,
+                         description: item.volumeInfo.description || 'No description',
                          bookId: item.id,
                          image: item.volumeInfo.imageLinks?.thumbnail || '',
                          link: item.volumeInfo.infoLink,
