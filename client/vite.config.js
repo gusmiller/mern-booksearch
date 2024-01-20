@@ -12,21 +12,20 @@
  * root (other JS and TS extensions are also supported).
  * URL: https://vitejs.dev/config/
  *******************************************************************/
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig  } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig({
      plugins: [react()],
      server: {
-          port: 3000,
+          port: 3010,
           open: true,
           proxy: {
                '/graphql': {
-                    target: 'http://localhost:3001',
+                    target: 'http://localhost:3011',
                     secure: false,
                     changeOrigin: true
                },
           }
      }
-})
+});

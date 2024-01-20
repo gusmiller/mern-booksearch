@@ -44,37 +44,32 @@ const SearchBooks = () => {
           return () => saveBookIds(savedBookIds);
      });
 
-     // create method to search for books and set state on form submit
+     /**
+      * This method will execute the search for books and set state on form submit
+      * @param {*} event 
+      * @returns 
+      */
      const handleFormSubmit = async (event) => {
           event.preventDefault();
 
           if (!searchInput) { return false; }
 
           try {
-               const response = await searchGoogleBooks(searchInput);
-               if (!response.ok) { throw new Error('something went wrong!'); }
-               const { items } = await response.json();
-
-               const bookData = items.map((book) => ({
-                    bookId: book.id,
-                    authors: book.volumeInfo.authors || ['No author to display'],
-                    title: book.volumeInfo.title,
-                    description: book.volumeInfo.description,
-                    image: book.volumeInfo.imageLinks?.thumbnail || '',
-               }));
-
-               setSearchedBooks(bookData);
+               // using the Lazy Query for searching Google Books
+               searchGoogleBooks({ variables: { searchInput }, });
                setSearchInput('');
-
           } catch (err) {
                console.error(err);
           }
      };
 
-     // create function to handle saving a book to our database
-     const handleSaveBook = async (bookId) => {
-          // find the book in `searchedBooks` state by the matching id
-          const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+     /**
+      * This method will handle the saving a book to our database
+      * @param {*} bookId 
+      * @returns 
+      */
+     const handleSaveBook = async (bookId) => {          
+          const bookToSave = await searchedBooks.find((book) => book.bookId === bookId);
           const token = Auth.loggedIn() ? Auth.getToken() : null; // get token
           if (!token) { return false; }
 
