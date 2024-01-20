@@ -41,9 +41,7 @@ const SavedBooks = () => {
      return (
           <>
                <div className="fluid text-light bg-dark p-5">
-                    <Container>
-                         <h1>Viewing saved books!</h1>
-                    </Container>
+                    <Container><h1>Viewing saved books!</h1></Container>
                </div>
                <Container>
                     <h2 className='pt-5'>
@@ -52,19 +50,17 @@ const SavedBooks = () => {
                               : 'You have no saved books!'}
                     </h2>
                     <Row>
-                         {userData.savedBooks?.map((book) => {
+                         {userData.savedBooks?.map((book, index) => {
                               return (
-                                   <Col md="4">
+                                   <Col key={index} md="4">
                                         <Card key={book.bookId} border='dark'>
                                              {book.image ? <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' /> : null}
                                              <Card.Body>
                                                   <Card.Title>{book.title}</Card.Title>
                                                   <p className='small'>Authors: {book.authors}</p>
                                                   <Card.Text>{book.description}</Card.Text>
-                                                  <Card.Link href={book.link}>URL Link</Card.Link>
-                                                  <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId)}>
-                                                       Delete this Book!
-                                                  </Button>
+                                                  <Card.Link href={book.link} hidden>URL Link</Card.Link>
+                                                  <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId)}>Delete this Book!</Button>
                                              </Card.Body>
                                         </Card>
                                    </Col>
