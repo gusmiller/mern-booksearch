@@ -7,10 +7,11 @@
  * Filename: auth.js
  * Date : 1/16/2024 9:27:28 PM
  *******************************************************************/
+require('dotenv').config({path: '../.env'});
 const jwt = require('jsonwebtoken');
 const { GraphQLError } = require('graphql');
 
-const secret = "abcdefghijklmnopABCDEFGHIJKLMNOP" //Secret password
+const secret = `${process.env.SECRET}` //Secret password
 const expiration = '2h'; //Expiration time span
 
 module.exports = {

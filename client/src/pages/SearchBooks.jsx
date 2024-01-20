@@ -24,6 +24,10 @@ const SearchBooks = () => {
 
      const [searchGoogleBooks, { loading, data }] = useLazyQuery(SEARCH_GOOGLE_BOOKS);
 
+     const [saveBook] = useMutation(SAVE_BOOK, {
+          context: { headers: { Authorization: `Bearer ${Auth.getToken()}`, }, },
+     });
+
      useEffect(() => {
           if (data) {
                const bookData = data.searchGoogleBooks.map((book) => ({
@@ -40,9 +44,7 @@ const SearchBooks = () => {
 
      // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
      // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
-     useEffect(() => {
-          return () => saveBookIds(savedBookIds);
-     });
+     useEffect(() => { return () => saveBookIds(savedBookIds); });
 
      /**
       * This method will execute the search for books and set state on form submit
@@ -64,27 +66,22 @@ const SearchBooks = () => {
      };
 
      /**
-      * This method will handle the saving a book to our database
+      * This method will handle the saving a book to our database using the graphql mutations
+      * we first perform a search of the book by the ID. This will return 1 record. Then we 
+      * fetch for the Token (from the local storage) and validate we are logged in.
+      * Using the save Book mutation we save the book, pass on the headers with token
       * @param {*} bookId 
       * @returns 
       */
-     const handleSaveBook = async (bookId) => {          
+     const handleSaveBook = async (bookId) => {
           const bookToSave = await searchedBooks.find((book) => book.bookId === bookId);
-          const token = Auth.loggedIn() ? Auth.getToken() : null; // get token
+          const token = Auth.loggedIn() ? Auth.getToken() : null; // Validate user logged in and get token
           if (!token) { return false; }
 
           try {
                const response = await saveBook({
-                    variables: {
-                         input: {
-                              authors: bookToSave.authors,
-                              bookId: bookToSave.bookId,
-                              title: bookToSave.title,
-                              description: bookToSave.description,
-                              image: bookToSave.image,
-                              link: bookToSave.link,
-                         }
-                    }
+                    variables: { bookData: bookToSave },
+                    headers: { Authorization: `Bearer ${Auth.getToken()}`, },
                });
 
                // if book successfully saves to user's account, save book id to state
@@ -126,7 +123,7 @@ const SearchBooks = () => {
                                                   <Card.Title>{book.title}</Card.Title>
                                                   <p className='small'>Authors: {book.authors}</p>
                                                   <Card.Text>{book.description}</Card.Text>
-                                                  <Card.Link href={book.link}>URL Link</Card.Link>
+                                                  <Card.Link href={book.link} hidden>URL Link {book.link}</Card.Link>
                                                   {Auth.loggedIn() && (
                                                        <Button
                                                             disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
