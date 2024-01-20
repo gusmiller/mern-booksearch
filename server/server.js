@@ -20,7 +20,7 @@ const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
 //const PORT = process.env.PORT;
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3010;
 
 const app = express();
 const server = new ApolloServer({
@@ -53,8 +53,8 @@ const startApolloServer = async () => {
 
      db.once('open', () => {
           app.listen(PORT, () => {
-               console.log(`GraphQL Server running on port ${PORT}!`);
-               console.log(`Use GraphQL at ${process.env.VITE_URL}/graphql`);
+               console.log(`Server running on port ${PORT}!`);
+               console.log(`Use GraphQL at ${process.env.VITE_BASE_URL}/graphql`);
           })
      })
 };
