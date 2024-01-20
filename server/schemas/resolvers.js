@@ -23,10 +23,11 @@ const resolvers = {
       */
      Query: {
 
-          me: async (parent, { context }) => {
-               return await User.findOne({ _id: context._id })
-                    .select('-__v -password')
-                    .populate('savedBooks');
+          me: async (parent, args, context ) => {
+               if (context.user) {
+                    return await User.findOne({ _id: context.user._id });
+               }
+               throw AuthenticationError;
           },
           searchGoogleBooks: async (_, { searchInput }) => {
                try {
@@ -70,7 +71,7 @@ const resolvers = {
                return { token, useraccess };
           },
 
-          addUser: async (_, { username, email, password }) => {
+          addUser: async (parent, { username, email, password }) => {
                const newuser = await User.create({ username, email, password });
                const token = signToken(newuser);
                return { token, newuser };
@@ -80,18 +81,18 @@ const resolvers = {
                const { authors, description, title, bookId, image, link } = input;
 
                if (context.user) {
-                    const updatedUser = await User.findOneAndUpdate(
+                    const bookSaved = await User.findOneAndUpdate(
                          { _id: context.user._id },
                          { $addToSet: { savedBooks: { authors, description, title, bookId, image, link } } },
                          { new: true, runValidators: true }
                     );
-                    return updatedUser;
+                    return bookSaved;
                }
 
                throw AuthenticationError;
           },
 
-          removeBook: async (_, { bookId }, context) => {
+          removeBook: async (parent, { bookId }, context) => {
                if (context.user) {
                     const removeBook = await User.findOneAndUpdate(
                          { _id: context.user._id },
@@ -100,7 +101,6 @@ const resolvers = {
                     );
                     return removeBook;
                }
-
                throw AuthenticationError;
           },
      },

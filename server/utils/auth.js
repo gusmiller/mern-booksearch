@@ -26,6 +26,7 @@ module.exports = {
                code: 'UNAUTHENTICATED',
           },
      }),
+
      /**
       * Middleware to authenticate routes - in case user is not logged in
       * @param {*} req - request??
@@ -34,26 +35,28 @@ module.exports = {
       * @returns 
       */
      authMiddleware: function ({ req }) {
-          let token = req.headers.authorization || '';
+          let token = req.body.token || req.query.token || req.headers.authorization;
           if (req.headers.authorization) { token = token.split(' ').pop().trim(); }
-          if (!token) { return { user: null } }
+          if (!token) { return req }
 
           // Attempt to Validate token and return user data
           try {
                const { data } = jwt.verify(token, secret, { maxAge: expiration });
-               return { user: data };
+               req.user = data;
           } catch (error) {
                console.error('Invalid token', error);
                return { user: null }
           }
+          return req;
      },
+
      /**
       * Authenticate routes. This will return the token
       * @param {*} param0 
       * @returns 
       */
-     signToken: function ({ username, email, _id }) {
-          const payload = { username, email, _id };
+     signToken: function ({ email, username, _id }) {
+          const payload = { email, username, _id };
           return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
      },
 };

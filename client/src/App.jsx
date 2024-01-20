@@ -22,8 +22,8 @@ const httpLink = createHttpLink({ uri: '/graphql', });
  * authentication token from local storage if it exists. It then 
  * return the headers to the context so httpLink can read them
  */
-const authLink = setContext((_, { headers }) => {     
-     const token = localStorage.getItem('id_token');     
+const authLink = setContext((_, { headers }) => {
+     const token = localStorage.getItem('id_token');
      return {
           headers: { ...headers, authorization: token ? `Bearer ${token}` : '', },
      };
