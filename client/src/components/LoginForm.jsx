@@ -16,7 +16,7 @@ import Auth from '../utils/auth';
 import { Token } from 'graphql';
 
 const LoginForm = () => {
-     const [userFormData, setUserFormData] = useState({ email: 'gustavo@miller.com', password: 'GM$ller' });
+     const [userFormData, setUserFormData] = useState({ email: '', password: '' });
      const [validated] = useState(false);
      const [showAlert, setShowAlert] = useState(false);
      const [loginUser] = useMutation(LOGIN_USER);

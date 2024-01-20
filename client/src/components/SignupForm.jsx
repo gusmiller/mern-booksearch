@@ -15,7 +15,6 @@ import { ADD_USER } from '../utils/mutations'; //Import mutations
 import Auth from '../utils/auth'; //Import authentication methods
 
 const SignupForm = () => {
-     //const [userFormData, setUserFormData] = useState({ username: 'Gustavo Miller', email: 'gustavo@miller.com', password: 'GM$ller' });
      const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' }); //Initial 
      const [validated] = useState(false); //Set state for form validation
      const [showAlert, setShowAlert] = useState(false); //State for alert
