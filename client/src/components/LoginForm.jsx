@@ -43,7 +43,7 @@ const LoginForm = () => {
                     },
                });
 
-               const { token, user } = await response.data.loginUser
+               const { token, user } = await response;
                Auth.login(token);
 
           } catch (err) {
