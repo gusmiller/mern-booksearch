@@ -35,7 +35,7 @@ const SavedBooks = () => {
           }
      };
 
-     // if data isn't here yet, say so
+     // While there is no data then  show loading
      if (loading) { return <h2>LOADING...</h2>; }
 
      return (
