@@ -46,6 +46,7 @@ class AuthService {
 
      logout() {          
           localStorage.removeItem('id_token'); //Clear token/profile from localStorage
+          localStorage.removeItem('saved_books'); //Clear token/profile from localStorage
           window.location.assign('/'); // Reload/reset application state
      }     
 }
