@@ -137,7 +137,10 @@ The JATE (Just Another Text Editor) requires two tiers; Server and client. Each 
 
 The MERM book search engine application was provided for us by Carleton program. This was as means for us to refactoring its RESTful engine for a me GraphQL query language using Apollo server. The process involved the change of RESTful API calls for mutations and typedefs in graphql.
 
-The application gives the user the ability to search for books based on categories and save the ones they like the most. Information is saved in a MongoDB no SQL database, using mongoose library.
+The application gives the user the ability to search for books based on categories and save the ones they like the most. Information is saved in a MongoDB no SQL database, using mongoose library. User can keep saved books and re-load them on future sessions.
+
+Here is an gif giving an example of what the applicatiopn does:
+![MERN Book Search Engine.](./assets/images/MERNVideo.gif)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
