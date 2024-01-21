@@ -45,6 +45,11 @@ Here is my product!
 </div>
 </div>
 
+### MERN Book Searching on Heroku
+As the need for cloud-native applications grows we need to brush our skils in using these services. Choosing the right services and tools can be quite overwhelming. MongoDB Atlas Cloud database services has paired with Heroku, which is one of the most popular PaaS solutions for developers. So, it does not come as a surpises to me, that we were asked to deploy our application on Heroku hosting platform and connecting to MongoDB Atlas cloud service. 
+
+Here is my [MERN Book Searching](https://mernbooks-searching-a2d6a799e61b.herokuapp.com/) published on Heroku.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <div id="installation" style="margin-bottom: 20px;margin-top: 20px;">
